@@ -6,3 +6,12 @@
  * 
 
 
+## TODO
+
+small refinements to be made for specific queries, like the age at the time of the trip needs to be filled.
+
+## NOTE 
+
+I'm not sure if it is possible to do a 1 on 1 connection between payment and trip. 
+Still have to figure out if this is possible with this data. But would like to concentrate on the other projects first.
+
