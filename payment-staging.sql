@@ -22,7 +22,7 @@ CREATE EXTERNAL TABLE payment (
 	[id] int,
 	[date] nvarchar(40),
 	[amount] float,
-	[account_nr] int
+	[rider_id] int
 	)
 	WITH (
 	LOCATION = 'payment',
@@ -30,7 +30,6 @@ CREATE EXTERNAL TABLE payment (
 	FILE_FORMAT = [SynapseDelimitedTextFormat]
 	)
 GO
-
 
 SELECT TOP 100 * FROM dbo.payment
 GO

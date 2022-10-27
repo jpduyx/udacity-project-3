@@ -1,5 +1,5 @@
 DROP EXTERNAL TABLE [dbo].[trip]
- GO
+GO
 
 IF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat') 
 	CREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] 
@@ -21,7 +21,7 @@ GO
 CREATE EXTERNAL TABLE trip (
 	[id] nvarchar(40),
 	[rideable_type] nvarchar(20),
-	[started_at] nvarchar(40),
+	[start_at] nvarchar(40),
 	[ended_at] nvarchar(40),
 	[startstation] nvarchar(4000),
 	[endstation] nvarchar(4000),
@@ -33,7 +33,6 @@ CREATE EXTERNAL TABLE trip (
 	FILE_FORMAT = [SynapseDelimitedTextFormat]
 	)
 GO
-
 
 SELECT TOP 100 * FROM dbo.trip
 GO
