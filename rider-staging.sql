@@ -23,9 +23,9 @@ CREATE EXTERNAL TABLE rider (
 	[first] nvarchar(4000),
 	[last] nvarchar(4000),
 	[address] nvarchar(4000),
-	[birthdate] nvarchar(4000),
-	[start_date] nvarchar(4000), 
-	[end_date] nvarchar(4000), 
+	[birthday] nvarchar(4000),
+	[account_start] nvarchar(4000), 
+	[account_end] nvarchar(4000), 
 	[is_member] bit
 	)
 	WITH (
