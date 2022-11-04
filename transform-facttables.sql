@@ -1,41 +1,26 @@
--- factPayment
-DROP TABLE factPayment
-CREATE TABLE factPayment(
-    id INT PRIMARY KEY NONCLUSTERED NOT ENFORCED,
-    amount MONEY,
-    date DATE,
---    member BIT,
---    startstation VARCHAR(50),
---    endstation VARCHAR(50),
-    rider_id INT
-);
-
-INSERT INTO factPayment(id, amount, date, rider_id)
-select id, amount, date, id
-from payment;
-
--- TODO how to make SQL for
-   -- rider is member at time of trip ? trip_date is in range rider.account_start rider.account_end 
-   -- getting start and endstation for a payment 
-
-select TOP 10 * from factPayment;
+-- Fact Tables
+-- transform divvy staging data into STAR schema
 
 
 -- factTrip
-DROP TABLE factTrip
+-- TODO make SQL for
+   -- rider age at time of trip 
+   -- SELECT DATEDIFF(year, 'trip start date', 'birthday') AS rider_age;
+   -- rider is member at time of trip ? -> DATEDIFF() 
+DROP TABLE IF EXISTS factTrip;
 CREATE TABLE factTrip(
-    id VARCHAR(50) PRIMARY KEY NONCLUSTERED NOT ENFORCED,
+    id VARCHAR(40) PRIMARY KEY, --NONCLUSTERED NOT ENFORCED
     start_at DATETIME,
     ended_at DATETIME,
-    duration VARCHAR(50),
+    duration TIME,
     startstation VARCHAR(50),
     endstation VARCHAR(50),
-    rideable_type VARCHAR(20),
-    rider INT
--- TODO
---    rider_age INT,
---    is_member BIT
-)
+    rideable_type VARCHAR(15),
+    rider INT,
+    rider_age INT,
+    is_member BIT
+);
+
 
 insert into factTrip(id, start_at, ended_at, startstation, endstation, 
                     rideable_type, rider)
@@ -46,6 +31,23 @@ select id,
 from trip;
 
 UPDATE factTrip SET duration = (ended_at - start_at);
+UPDATE factTrip SET rider_age = datediff (year, r.birthday, t.start_at)
+from factTrip t LEFT JOIN rider r ON r.id = t.rider;
 
 select TOP 10 * from factTrip;
 
+
+-- factPayment
+DROP TABLE IF EXISTS factPayment
+CREATE TABLE factPayment(
+    id INT PRIMARY KEY, --NONCLUSTERED NOT ENFORCED
+    amount FLOAT,
+    date DATE,
+    rider INT
+);
+
+INSERT INTO factPayment(id, amount, date, rider)
+select id, amount, date, rider
+from payment;
+
+select TOP 10 * from factPayment;
